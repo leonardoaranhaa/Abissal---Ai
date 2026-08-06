@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ABISSAL — Escola Avançada de Inteligência Artificial</title>
-<meta name="description" content="Escola de IA com método de imersão. 12 trilhas, 132 módulos. Descubra seu percurso em 2 minutos.">
+<meta name="description" content="Escola de IA com método de imersão. Faça um mergulho real de 4 minutos antes de decidir qualquer coisa.">
 <meta property="og:title" content="ABISSAL — Escola Avançada de IA">
 <meta property="og:description" content="Ninguém contrata quem só nadou na superfície.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,13 +25,14 @@
 
 <div class="hud" id="hud"><div class="in">
  <span class="bm">Abissal</span>
- <a class="lk" href="#diag">Percurso</a><a class="lk" href="#aula">Como é uma aula</a>
+ <a class="lk" href="#mergulho">O mergulho</a>
  <a class="lk" href="#curriculo">Currículo</a>
  <a class="lk" href="curriculo.html">Catálogo completo</a>
  <span class="sp"></span>
  <a class="btn pri" href="#lista">Entrar na lista</a>
 </div></div>
 
+<!-- ============ SUPERFÍCIE: a tese, e um convite a fazer ============ -->
 <div class="surface">
  <div class="gridbg" aria-hidden="true"></div>
  <div class="wrap">
@@ -45,21 +46,44 @@
    <p class="lead">Escrever prompt bonito e colar num chat já está saturado — e já está sendo
    automatizado. O trabalho que vai existir em 2030 está embaixo: quem projeta agentes, desenha a
    arquitetura de dados, mede o que o sistema erra e responde por ele.</p>
+
+   <div class="hcta">
+    <p class="hcta-t">Não vamos te explicar o método. Você vai fazer um.</p>
+    <p class="hcta-d">Um mergulho real da trilha de Engenharia de Prompt, as sete fases inteiras,
+    com as travas funcionando. Cerca de 4 minutos. Sem cadastro, sem e-mail, sem pegadinha.</p>
+    <button class="btn pri grande" id="mgIniciar">Começar o mergulho ↓</button>
+   </div>
+
    <div class="hnums">
     <div><b data-n="12">0</b>trilhas</div><div><b data-n="132">0</b>módulos</div>
     <div><b data-n="528">0</b>aulas mapeadas</div><div><b data-n="1540">0</b>horas</div>
-   </div>
-   <div class="hq">
-    <div class="lb">Comece agora — pergunta 1 de 5</div>
-    <div class="qq">De onde você está partindo?</div>
-    <div class="hopts" id="hopts"></div>
-    <div class="hscroll"><i></i> a descida começa aqui</div>
    </div>
   </header>
  </div>
 </div>
 
-<section class="section" id="diag">
+<!-- ============ O MERGULHO — o corpo da página ============ -->
+<section class="section" id="mergulho">
+ <div class="wrap">
+  <div class="sec-head">
+   <h2>Um mergulho de verdade, agora</h2>
+   <p>EP · E1 · M02 · A03 — Mesa de Ensaio. Este é conteúdo real do currículo, não uma amostra
+   feita para a landing.</p>
+  </div>
+
+  <div class="mg">
+   <div class="mg-topo">
+    <span class="mono" id="mgStat">Fase 0 de 6 · Briefing</span>
+    <div class="mg-barra"><i id="mgProg"></i></div>
+   </div>
+   <nav class="mg-nav" id="mgNav" aria-label="Fases do mergulho"></nav>
+   <div class="mg-corpo" id="mgCorpo"></div>
+  </div>
+ </div>
+</section>
+
+<!-- ============ DIAGNÓSTICO — só abre no fim do mergulho ============ -->
+<section class="section" id="diag" hidden>
  <div class="wrap">
   <div class="dbox" id="dbox">
    <div class="dmeta"><span id="dm1">Sondagem</span><span id="dm2">profundidade <b>0 m</b></span></div>
@@ -68,27 +92,8 @@
  </div>
 </section>
 
-<section class="section rv" id="aula" style="background:var(--shelf)">
- <div class="wrap">
-  <div class="sec-head">
-   <h2>Faça o começo de uma aula agora</h2>
-   <p>Este é o primeiro terço de um mergulho real da trilha de Engenharia de Prompt. Você decide, o sistema responde.</p>
-  </div>
-  <div class="lab">
-   <div class="lab-h">
-    <span class="st" id="labSt">EP · E1 · M02 · A03 · Mesa de Ensaio</span>
-    <span class="pr" id="labPr"></span>
-   </div>
-   <div class="lab-b" id="labB"></div>
-  </div>
-  <div class="fases">
-   <div class="fnav" id="fnav"></div>
-   <div class="fbody" id="fbody"></div>
-  </div>
- </div>
-</section>
-
-<section class="section rv" id="curriculo">
+<!-- ============ CURRÍCULO ============ -->
+<section class="section rv" id="curriculo" style="background:var(--shelf)">
  <div class="wrap">
   <div class="sec-head">
    <h2>O currículo inteiro, aberto</h2>
@@ -99,7 +104,8 @@
  </div>
 </section>
 
-<section class="section rv" style="background:var(--shelf)">
+<!-- ============ VERDADES ============ -->
+<section class="section rv">
  <div class="wrap">
   <div class="sec-head">
    <h2>Antes de você deixar seu e-mail</h2>
@@ -109,7 +115,10 @@
  </div>
 </section>
 
-<section class="section rv" id="lista"><div class="wrap"><div id="formHolder"></div></div></section>
+<!-- ============ LISTA ============ -->
+<section class="section rv" id="lista" style="background:var(--shelf)">
+ <div class="wrap"><div id="formHolder"></div></div>
+</section>
 
 <footer><div class="wrap"><div class="foot">
  <span>Abissal · Escola Avançada de IA</span>
@@ -128,4 +137,5 @@
 
 <script src="data/curriculo.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/mergulho.js"></script>
 </body></html>
