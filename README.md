@@ -27,23 +27,28 @@ site/assets/js/app.js        toda a lógica (diagnóstico, laboratório, curríc
 site/data/curriculo.js       currículo completo — 12 trilhas, 132 módulos
 ```
 
-## Antes de publicar
+## Captação de lead
 
-Em `site/assets/js/app.js`, topo do arquivo:
+Configurado em `site/assets/js/app.js`, topo do arquivo:
 
 ```js
-const FORM_ENDPOINT = "";   // URL do Formspree ou equivalente
+const FORM_ENDPOINT = "https://formspree.io/f/xdenobvp";
 const WHATSAPP      = "";   // "5514999999999" ou vazio
 ```
 
-Sem `FORM_ENDPOINT`, o site roda em modo teste: o lead cai no console do navegador
-em vez de ser enviado. Não publique assim — confira abrindo o DevTools e testando
-o formulário antes de divulgar o link.
+O endpoint fica no repositório de propósito — ele aparece no código-fonte de qualquer
+página publicada, então escondê-lo não protegeria nada, e tirá-lo daqui quebraria o
+deploy automático a partir do GitHub. Chave de API é outra história: essa nunca entra
+no repositório.
+
+Se `FORM_ENDPOINT` estiver vazio, o site roda em modo teste — o lead cai no console
+do navegador em vez de ser enviado.
 
 ## Deploy
 
-Sem build step: arraste a pasta `site/` para Netlify Drop, Vercel ou Cloudflare Pages.
-Custo: R$ 0/mês além do domínio. Passo a passo completo em `docs/publicar-abissal.md`.
+Vercel conectada a este repositório: todo push em `main` republica sozinho.
+Root directory do projeto na Vercel: `site/`. Sem build step, sem custo.
+Passo a passo e alternativas (Netlify, Cloudflare) em `docs/publicar-abissal.md`.
 
 ## Onde editar o currículo
 

@@ -31,10 +31,10 @@ jobs:
       - name: Checar referências locais quebradas em HTML
         run: node .github/scripts/checar-referencias.js
 
-      - name: Garantir que FORM_ENDPOINT não foi commitado com valor real
+      - name: Garantir que nenhuma chave de API foi commitada
         run: |
-          if grep -Eq 'const FORM_ENDPOINT *= *"[^"]+"' site/assets/js/app.js; then
-            echo "FORM_ENDPOINT está preenchido em site/assets/js/app.js — não deveria ir para o repositório (ver README, seção 'Antes de publicar')."
+          if grep -rEn 'sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{30,}|xox[baprs]-[A-Za-z0-9-]{10,}' site/; then
+            echo "Possível chave de API encontrada em site/ — não commitar credenciais."
             exit 1
           fi
-          echo "FORM_ENDPOINT vazio, como esperado."
+          echo "Nenhuma chave de API encontrada."
