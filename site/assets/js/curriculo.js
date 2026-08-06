@@ -118,7 +118,12 @@ function renderIndex(){
 
 /* ---------- painel ---------- */
 function abrir(i,estAberto){
-  atual=i;renderIndex();renderPainel(estAberto);
+  atual=i;
+  if(estAberto!=null&&filtro!=="all"){
+    filtro="all";
+    document.querySelectorAll("#filtros .chip").forEach(b=>b.setAttribute("aria-pressed",b.dataset.f==="all"?"true":"false"));
+  }
+  renderIndex();renderPainel(estAberto);
 }
 function renderPainel(estAberto){
   const t=DADOS.trilhas[atual],p=$("#painel");
