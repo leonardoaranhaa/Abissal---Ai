@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verificar-site:
+    name: Verificar site estático
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Checar sintaxe dos arquivos JS
+        run: |
+          status=0
+          while IFS= read -r -d '' f; do
+            echo "node --check $f"
+            node --check "$f" || status=1
+          done < <(find site -name '*.js' -print0)
+          exit $status
+
+      - name: Checar referências locais quebradas em HTML
+        run: node .github/scripts/checar-referencias.js
+
+      - name: Garantir que FORM_ENDPOINT não foi commitado com valor real
+        run: |
+          if grep -Eq 'const FORM_ENDPOINT *= *"[^"]+"' site/assets/js/app.js; then
+            echo "FORM_ENDPOINT está preenchido em site/assets/js/app.js — não deveria ir para o repositório (ver README, seção 'Antes de publicar')."
+            exit 1
+          fi
+          echo "FORM_ENDPOINT vazio, como esperado."
