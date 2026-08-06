@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABISSAL — Currículo completo</title>
+<meta name="description" content="As 12 trilhas do currículo Abissal, módulo por módulo, aula por aula. Carta de profundidade, percursos de carreira e o método de mergulho.">
+<meta property="og:title" content="ABISSAL — Currículo completo">
+<meta property="og:description" content="Sem conteúdo surpresa. O currículo inteiro, aberto.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/curriculo.css">
+</head>
+<body>
+<div class="rail" aria-hidden="true">
+  <span class="rail-tick">Superfície · 0 m</span>
+  <span class="rail-tick">Fronteira · 4 000 m</span>
+</div>
+<div class="rail-cursor" id="railCursor" aria-hidden="true"></div>
+<div class="rail-depth" id="railDepth" aria-hidden="true">0 m</div>
+
+<!-- ============ SUPERFÍCIE ============ -->
+<div class="surface">
+  <div class="gridbg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="top">
+      <span class="brand">Abissal</span>
+      <span class="mono"><a class="btn gh" href="index.html">← voltar à landing</a></span>
+    </div>
+
+    <header class="hero">
+      <div class="eyebrow">Currículo aberto · edição 2026 · 12 trilhas · 4 estratos</div>
+      <h1>Ninguém contrata quem só nadou na <em>superfície</em>.</h1>
+      <p class="lead">A camada rasa da IA — escrever prompts bonitos, colar num chat — já está saturada
+        e já está sendo automatizada. O trabalho que vai existir em 2030 está embaixo: quem projeta
+        sistemas de agentes, desenha a arquitetura de dados que os alimenta, mede o que eles erram e
+        responde por eles. Este currículo desce até lá, camada por camada.</p>
+      <div class="hero-actions">
+        <a class="btn pri" href="#carta">Ver a carta de profundidade</a>
+        <a class="btn gh" href="#catalogo">Abrir o catálogo</a>
+        <a class="btn gh" href="#rotas">Escolher um percurso</a>
+        <a class="btn gh" href="index.html#lista">Entrar na lista</a>
+      </div>
+      <div class="hero-stats">
+        <div><b id="sTrilhas">12</b> trilhas</div>
+        <div><b id="sModulos">0</b> módulos</div>
+        <div><b id="sHoras">0</b> horas de percurso</div>
+      </div>
+    </header>
+  </div>
+</div>
+
+<!-- ============ CARTA BATIMÉTRICA ============ -->
+<section class="section wrap" id="carta">
+  <div class="sec-head">
+    <h2>Carta de profundidade</h2>
+    <p>Colunas são trilhas, linhas são estratos. Quanto mais fundo o tom, mais fundo o
+      conteúdo. Clique numa célula para abrir aquele estrato.</p>
+  </div>
+  <div class="carta">
+    <div class="carta-grid" id="cartaGrid"></div>
+  </div>
+  <div class="legend mono">
+    <span><i class="sw" style="background:#16303A"></i>E1 fótico · fundamentos</span>
+    <span><i class="sw" style="background:#122932"></i>E2 plataforma · aplicação</span>
+    <span><i class="sw" style="background:#0E2129"></i>E3 talude · especialização</span>
+    <span><i class="sw" style="background:#0A1A21"></i>E4 abissal · fronteira</span>
+    <span style="color:var(--dim)">número = módulos · canto = horas</span>
+  </div>
+</section>
+
+<!-- ============ CATÁLOGO ============ -->
+<section class="section wrap" id="catalogo">
+  <div class="sec-head">
+    <h2>Catálogo acadêmico</h2>
+    <p>Cada trilha traz ementa, pré-requisitos, ferramentas de trabalho, projeto avaliativo por
+      estrato e os cargos que ela abre.</p>
+  </div>
+  <div class="catalog">
+    <aside class="index">
+      <input class="search" id="busca" type="search" placeholder="Buscar trilha, módulo ou aula" aria-label="Buscar no catálogo">
+      <div class="filters" id="filtros">
+        <button class="chip" data-f="all" aria-pressed="true">Todas</button>
+        <button class="chip" data-f="1" aria-pressed="false">E1</button>
+        <button class="chip" data-f="2" aria-pressed="false">E2</button>
+        <button class="chip" data-f="3" aria-pressed="false">E3</button>
+        <button class="chip" data-f="4" aria-pressed="false">E4</button>
+      </div>
+      <div class="idx-title">Trilhas</div>
+      <nav id="indexNav"></nav>
+    </aside>
+    <div id="painel" class="panel"></div>
+  </div>
+</section>
+
+<!-- ============ PERCURSOS ============ -->
+<section class="section wrap" id="rotas">
+  <div class="sec-head">
+    <h2>Percursos de carreira</h2>
+    <p>Combinações de módulos de trilhas diferentes, montadas para um cargo específico.
+      Um percurso não substitui a trilha — ele atravessa várias.</p>
+  </div>
+  <div class="rotas" id="rotasGrid"></div>
+</section>
+
+<!-- ============ MÉTODO ============ -->
+<section class="section wrap" id="metodo">
+  <div class="sec-head">
+    <h2>O método de mergulho</h2>
+    <p>Toda aula é um mergulho de sete fases, com ambiente próprio, verificação executável e aterrissagem no seu projeto real. O critério de conclusão nunca é assistir.</p>
+  </div>
+  <div class="metodo" id="metodoGrid"></div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <span>Abissal · Escola Avançada de IA</span>
+      <span>Currículo v0.1 · estrutura publicada · conteúdo das aulas em produção</span>
+      <span><a href="index.html#lista">Entrar na lista</a></span>
+    </div>
+  </div>
+</footer>
+
+<script src="data/curriculo.js"></script>
+<script src="assets/js/curriculo.js"></script>
+</body></html>
