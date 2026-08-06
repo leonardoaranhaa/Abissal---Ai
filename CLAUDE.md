@@ -104,8 +104,11 @@ Como é uma pessoa só orquestrando, prefira:
   facilita reverter quando uma sessão do Code degringola.
 - Antes de pedir uma feature nova ao Code, diga a ele para ler este arquivo e
   `docs/metodo-abissal.md` primeiro, especialmente em sessões novas.
-- Nunca commitar `FORM_ENDPOINT` ou chaves de API no repositório público. Ver README
-  sobre variáveis de ambiente quando isso deixar de ser um site estático.
+- Nunca commitar chave de API no repositório público. `FORM_ENDPOINT` é exceção
+  deliberada: ele fica visível no código-fonte de qualquer página publicada, então
+  escondê-lo não protegeria nada, e mantê-lo fora do repo quebrava o deploy contínuo
+  a partir do GitHub. Chave de verdade (modelo, banco) nunca entra aqui — quando
+  isso deixar de ser site estático, vai para variável de ambiente com rota de servidor.
 
 ## O que NÃO fazer nesta fase
 

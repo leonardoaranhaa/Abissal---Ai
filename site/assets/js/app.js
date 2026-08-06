@@ -1,7 +1,10 @@
 /* ===================================================================
-   CONFIGURAÇÃO — troque antes de publicar
+   CONFIGURAÇÃO
+   Endpoint de formulário fica no repositório de propósito: ele é
+   visível no código-fonte de qualquer página publicada, então esconder
+   não protegeria nada. Não vale para chave de API — essa nunca entra aqui.
    =================================================================== */
-const FORM_ENDPOINT = "";   // URL do Formspree/Tally. Vazio = modo teste.
+const FORM_ENDPOINT = "https://formspree.io/f/xdenobvp";
 const WHATSAPP      = "";   // ex.: "5514999999999". Vazio = oculto.
 /* =================================================================== */
 
