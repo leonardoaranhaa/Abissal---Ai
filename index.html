@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ABISSAL — Escola Avançada de Inteligência Artificial</title>
+<meta name="description" content="Escola de IA com método de imersão. 12 trilhas, 132 módulos. Descubra seu percurso em 2 minutos.">
+<meta property="og:title" content="ABISSAL — Escola Avançada de IA">
+<meta property="og:description" content="Ninguém contrata quem só nadou na superfície.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+<canvas id="snow" aria-hidden="true"></canvas>
+
+<div class="gauge" aria-hidden="true">
+ <div class="line"></div>
+ <div class="tick" style="top:14%"></div><div class="tick" style="top:38%"></div>
+ <div class="tick" style="top:62%"></div><div class="tick" style="top:86%"></div>
+ <div class="cur" id="gCur"></div><div class="val" id="gVal">0 m</div>
+ <div class="zone" id="gZone">Superfície</div>
+</div>
+
+<div class="hud" id="hud"><div class="in">
+ <span class="bm">Abissal</span>
+ <a class="lk" href="#diag">Percurso</a><a class="lk" href="#aula">Como é uma aula</a>
+ <a class="lk" href="#curriculo">Currículo</a>
+ <span class="sp"></span>
+ <a class="btn pri" href="#lista">Entrar na lista</a>
+</div></div>
+
+<div class="surface">
+ <div class="gridbg" aria-hidden="true"></div>
+ <div class="wrap">
+  <div class="top">
+   <span class="brand">Abissal</span>
+   <button class="snd" id="snd" aria-pressed="false">♪ som</button>
+  </div>
+  <header class="hero">
+   <div class="eyebrow" style="color:#4a5f66">Escola Avançada de Inteligência Artificial · turma piloto em formação</div>
+   <h1 style="margin-top:22px">Ninguém contrata quem só nadou na <em>superfície</em>.</h1>
+   <p class="lead">Escrever prompt bonito e colar num chat já está saturado — e já está sendo
+   automatizado. O trabalho que vai existir em 2030 está embaixo: quem projeta agentes, desenha a
+   arquitetura de dados, mede o que o sistema erra e responde por ele.</p>
+   <div class="hnums">
+    <div><b data-n="12">0</b>trilhas</div><div><b data-n="132">0</b>módulos</div>
+    <div><b data-n="528">0</b>aulas mapeadas</div><div><b data-n="1540">0</b>horas</div>
+   </div>
+   <div class="hq">
+    <div class="lb">Comece agora — pergunta 1 de 5</div>
+    <div class="qq">De onde você está partindo?</div>
+    <div class="hopts" id="hopts"></div>
+    <div class="hscroll"><i></i> a descida começa aqui</div>
+   </div>
+  </header>
+ </div>
+</div>
+
+<section class="section" id="diag">
+ <div class="wrap">
+  <div class="dbox" id="dbox">
+   <div class="dmeta"><span id="dm1">Sondagem</span><span id="dm2">profundidade <b>0 m</b></span></div>
+   <div id="dstep"></div>
+  </div>
+ </div>
+</section>
+
+<section class="section rv" id="aula" style="background:var(--shelf)">
+ <div class="wrap">
+  <div class="sec-head">
+   <h2>Faça o começo de uma aula agora</h2>
+   <p>Este é o primeiro terço de um mergulho real da trilha de Engenharia de Prompt. Você decide, o sistema responde.</p>
+  </div>
+  <div class="lab">
+   <div class="lab-h">
+    <span class="st" id="labSt">EP · E1 · M02 · A03 · Mesa de Ensaio</span>
+    <span class="pr" id="labPr"></span>
+   </div>
+   <div class="lab-b" id="labB"></div>
+  </div>
+  <div class="fases">
+   <div class="fnav" id="fnav"></div>
+   <div class="fbody" id="fbody"></div>
+  </div>
+ </div>
+</section>
+
+<section class="section rv" id="curriculo">
+ <div class="wrap">
+  <div class="sec-head">
+   <h2>O currículo inteiro, aberto</h2>
+   <p>Sem "conteúdo surpresa". Clique numa trilha e veja módulo por módulo, aula por aula.</p>
+  </div>
+  <div class="tgrid" id="tgrid"></div>
+ </div>
+</section>
+
+<section class="section rv" style="background:var(--shelf)">
+ <div class="wrap">
+  <div class="sec-head">
+   <h2>Antes de você deixar seu e-mail</h2>
+   <p>Coisas que uma escola honesta diz antes de vender, não depois.</p>
+  </div>
+  <div class="vlist" id="vlist"></div>
+ </div>
+</section>
+
+<section class="section rv" id="lista"><div class="wrap"><div id="formHolder"></div></div></section>
+
+<footer><div class="wrap"><div class="foot">
+ <span>Abissal · Escola Avançada de IA</span>
+ <span>Currículo v0.1 · turma piloto</span>
+ <span>Um projeto Studio Cerne</span>
+</div></div></footer>
+
+<div class="cta" id="cta">
+ <span class="t">Seu percurso está montado<b id="ctaT">—</b></span>
+ <a class="btn pri" href="#lista">Guardar</a>
+</div>
+
+<dialog id="dlg"><div class="dlg-h"><div id="dlgTitle"></div>
+ <button class="mono" id="dlgX" style="color:var(--dim)">fechar ✕</button></div>
+ <div class="dlg-b" id="dlgBody"></div></dialog>
+
+<script src="data/curriculo.js"></script>
+<script src="assets/js/app.js"></script>
+</body></html>
