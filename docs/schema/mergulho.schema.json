@@ -1,0 +1,228 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://abissal.school/schema/mergulho.schema.json",
+  "title": "Mergulho Abissal",
+  "description": "Uma aula completa do método Abissal: 7 fases, travas e verificações executáveis. Ver docs/formato-mergulho.md para a semântica de cada campo.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "titulo", "trilha", "estrato", "modulo", "aula", "ambiente", "versao", "leis", "verificadores", "fases"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "TRILHA.EN.MNN.ANN — mesmo código usado em curriculo.js e na URL do mergulho.",
+      "pattern": "^[A-Z]{2}\\.E[1-4]\\.M\\d{2}\\.A\\d{2}$"
+    },
+    "titulo": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Começa com o que o aluno vai FAZER ou ENTENDER, não com o nome da tecnologia (docs/curriculo.md)."
+    },
+    "trilha": { "type": "string", "pattern": "^[A-Z]{2}$" },
+    "estrato": { "type": "integer", "minimum": 1, "maximum": 4 },
+    "modulo": { "type": "integer", "minimum": 1 },
+    "aula": { "type": "integer", "minimum": 1 },
+    "ambiente": {
+      "type": "string",
+      "enum": ["Bancada", "Mesa de Ensaio", "Sala de Situação", "Cabine", "Prancheta", "Campo"],
+      "description": "Um dos seis ambientes de docs/metodo-abissal.md §4 — define a restrição de trabalho real da fase 3."
+    },
+    "versao": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Semver do conteúdo. Sobe quando um caso, verificação ou trava muda de um jeito que invalida progresso salvo de um aluno em andamento."
+    },
+    "duracao_min": { "type": "integer", "minimum": 25, "description": "Soma das 7 fases. Nunca abaixo de 25 — é a sessão mínima viável (§8)." },
+    "duracao_min_curta": {
+      "type": "integer",
+      "minimum": 25,
+      "description": "Versão curta do mesmo mergulho (§8: 'existe uma versão curta de todo mergulho, que ainda termina com artefato'). Omitir se não houver corte definido ainda."
+    },
+    "leis": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "enum": ["lei1", "lei2", "lei3", "lei4", "lei5"] },
+      "description": "Quais das 5 leis este mergulho exercita de forma explícita — não decorativo, serve de checklist de revisão de conteúdo."
+    },
+    "verificadores": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/verificador" },
+      "description": "Testes executáveis referenciados pelo id em resultados_teste dentro das fases 3 e 4. Lei 4: quem julga é o verificador, nunca o modelo."
+    },
+    "fases": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["0_briefing", "1_tentativa_cega", "2_descida", "3_trabalho_no_fundo", "4_pressao", "5_descompressao", "6_emersao"],
+      "properties": {
+        "0_briefing": { "$ref": "#/$defs/faseBriefing" },
+        "1_tentativa_cega": { "$ref": "#/$defs/faseExecucao" },
+        "2_descida": { "$ref": "#/$defs/faseDescida" },
+        "3_trabalho_no_fundo": { "$ref": "#/$defs/faseExecucao" },
+        "4_pressao": { "$ref": "#/$defs/fasePressao" },
+        "5_descompressao": { "$ref": "#/$defs/faseDescompressao" },
+        "6_emersao": { "$ref": "#/$defs/faseEmersao" }
+      }
+    }
+  },
+  "$defs": {
+    "verificador": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "descricao", "tipo"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "descricao": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Rótulo humano mostrado ao aluno, ex. 'Quantidade como número, não texto'."
+        },
+        "tipo": {
+          "enum": ["json-schema", "regex", "campo-nao-nulo", "tipo-de-campo", "estavel-entre-execucoes", "funcao-pura"],
+          "description": "Como o teste é avaliado. Nenhum dos tipos aciona um modelo — é a garantia de que o verificador não pode ser convencido."
+        },
+        "parametros": {
+          "type": "object",
+          "description": "Forma livre, dependente de 'tipo' (ex.: {\"schema\": {...}} para json-schema, {\"padrao\": \"...\"} para regex, {\"funcao\": \"nomeNoRegistroDeVerificadores\"} para funcao-pura)."
+        }
+      }
+    },
+    "caso": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "entrada"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "rotulo": { "type": "string", "description": "Ex. 'WhatsApp · caso A'." },
+        "entrada": { "type": "string", "minLength": 1 },
+        "contexto": { "type": "string", "description": "Frase de setup antes do caso, se precisar (ex. quem manda a mensagem e por quê)." }
+      }
+    },
+    "opcao": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["texto", "correta", "retorno"],
+      "properties": {
+        "texto": { "type": "string", "minLength": 1 },
+        "detalhe": { "type": "string" },
+        "correta": { "type": "boolean" },
+        "retorno": { "type": "string", "minLength": 1, "description": "Feedback mostrado ao escolher esta opção, certa ou errada." }
+      }
+    },
+    "execucao": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["texto", "modo", "resultados_teste", "diagnostico"],
+      "description": "Uma tentativa de resolução (um prompt, uma escolha de arquitetura, um comando) e o que ela produz.",
+      "properties": {
+        "texto": { "type": "string", "minLength": 1, "description": "O prompt ou a decisão que o aluno está escolhendo/vendo." },
+        "modo": {
+          "enum": ["roteirizado", "vivo"],
+          "description": "roteirizado = saída pré-escrita, custo zero de modelo, usado na landing e em conteúdo ainda não migrado; vivo = roda contra o sandbox/modelo de verdade e os verificadores avaliam a saída real."
+        },
+        "saidas": {
+          "type": "object",
+          "additionalProperties": { "type": "string" },
+          "description": "Por caso.id — a saída (real ou roteirizada) para cada caso desta fase."
+        },
+        "resultados_teste": {
+          "type": "object",
+          "additionalProperties": { "type": "boolean" },
+          "description": "Por verificador.id — se modo=roteirizado, valor travado no arquivo; se modo=vivo, é preenchido em runtime e este campo vira só o resultado de referência usado para revisão de conteúdo."
+        },
+        "diagnostico": { "type": "string", "minLength": 1, "description": "Explicação do que passou/falhou e por quê — o que a fase 2 vai responder." }
+      }
+    },
+    "faseBriefing": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["contexto", "casos", "opcoes_leitura", "trava"],
+      "properties": {
+        "contexto": { "type": "string", "minLength": 1 },
+        "casos": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/caso" } },
+        "opcoes_leitura": {
+          "type": "array",
+          "minItems": 2,
+          "items": { "$ref": "#/$defs/opcao" },
+          "description": "Leituras possíveis do problema. Exatamente uma deve ter correta=true."
+        },
+        "trava": { "type": "string", "minLength": 1 }
+      }
+    },
+    "faseExecucao": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["instrucao", "execucoes", "trava"],
+      "properties": {
+        "instrucao": { "type": "string", "minLength": 1 },
+        "execucoes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/execucao" } },
+        "trava": { "type": "string", "minLength": 1 }
+      }
+    },
+    "faseDescida": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["conceito", "checagens", "trava"],
+      "properties": {
+        "conceito": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "checagens": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["pergunta", "opcoes"],
+            "properties": {
+              "pergunta": { "type": "string", "minLength": 1 },
+              "opcoes": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/opcao" } }
+            }
+          }
+        },
+        "trava": { "type": "string", "minLength": 1 }
+      }
+    },
+    "fasePressao": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ataque", "defesas", "trava"],
+      "properties": {
+        "ataque": { "$ref": "#/$defs/caso" },
+        "defesas": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["texto", "resiste", "saida", "retorno"],
+            "properties": {
+              "texto": { "type": "string", "minLength": 1 },
+              "resiste": { "type": "boolean" },
+              "saida": { "type": "string" },
+              "retorno": { "type": "string", "minLength": 1 }
+            }
+          },
+          "description": "Exatamente uma defesa deve ter resiste=true."
+        },
+        "trava": { "type": "string", "minLength": 1 }
+      }
+    },
+    "faseDescompressao": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pergunta", "min_caracteres", "trava"],
+      "properties": {
+        "pergunta": { "type": "string", "minLength": 1 },
+        "min_caracteres": { "type": "integer", "minimum": 1 },
+        "trava": { "type": "string", "minLength": 1 }
+      }
+    },
+    "faseEmersao": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["texto", "trava"],
+      "properties": {
+        "texto": { "type": "string", "minLength": 1 },
+        "trava": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}
