@@ -35,10 +35,15 @@ os 7 mergulhos completos (briefing, tentativa cega, descida, bancada, pressão,
 descompressão, emersão), no padrão do mergulho de demonstração já construído
 (`EP.E1.M02.A03`, hoje hardcoded em `app.js` como conteúdo de exemplo).
 
-**Decisão de arquitetura pendente, a tomar no início desta fase:** formato de arquivo
-para um mergulho completo. Candidatos: JSON por aula, Markdown com frontmatter, ou
-migrar para um CMS leve. Não decidir isso agora — decidir quando houver 2-3 mergulhos
-reais escritos e um padrão emergir do uso, não da teoria.
+**Decisão de arquitetura:** formato de arquivo para um mergulho completo — antecipada
+antes do gatilho oficial desta fase, para não deixar a primeira trilha real ser
+escrita em cima de um formato inventado ad hoc. Esquema em
+`docs/formato-mergulho.md` / `docs/schema/mergulho.schema.json`, um arquivo JSON por
+aula em `content/mergulhos/`, validado em CI. O mergulho de demonstração
+(`EP.E1.M02.A03`) já está transcrito lá como referência. Ainda vale o espírito
+original: só produzir os 2-3 primeiros mergulhos reais vai confirmar se o formato
+aguenta a trilha inteira sem forçar — revisar o esquema se ele rachar, não empurrar
+conteúdo real para dentro de um formato que não serve.
 
 **Critério de saída:** uma trilha (4 estratos, ~12 módulos, ~48 aulas) com conteúdo
 real, testável por um aluno beta do zero ao fim.

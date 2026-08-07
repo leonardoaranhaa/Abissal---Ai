@@ -31,6 +31,9 @@ jobs:
       - name: Checar referências locais quebradas em HTML
         run: node .github/scripts/checar-referencias.js
 
+      - name: Validar esquema dos mergulhos
+        run: node .github/scripts/checar-mergulhos.js
+
       - name: Garantir que nenhuma chave de API foi commitada
         run: |
           if grep -rEn 'sk-[A-Za-z0-9]{20,}|AIza[A-Za-z0-9_-]{30,}|xox[baprs]-[A-Za-z0-9-]{10,}' site/; then

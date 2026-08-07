@@ -48,8 +48,12 @@ abissal/
   docs/
     metodo-abissal.md      → manual pedagógico — leia antes de mexer em UX de aula
     curriculo.md           → como o currículo foi desenhado, convenções de conteúdo
-    marca.md                → guia da marca — símbolo, cor, tipografia, o que não fazer
+    marca.md               → guia da marca — símbolo, cor, tipografia, o que não fazer
+    formato-mergulho.md    → esquema do arquivo de mergulho completo (7 fases + testes)
     ROADMAP.md             → fases seguintes e critérios de avanço
+    schema/mergulho.schema.json → JSON Schema formal do mergulho
+  content/
+    mergulhos/              → mergulhos completos, um arquivo por aula (*.mergulho.json)
   CLAUDE.md                → este arquivo
   README.md                → como rodar, testar e publicar localmente
 ```
@@ -57,6 +61,12 @@ abissal/
 Não existe build step. `site/` é HTML/CSS/JS puro, aberto direto no navegador ou
 servido por qualquer servidor estático. Mantenha assim enquanto estiver em validação —
 introduzir um bundler agora é trabalho que não paga aluguel.
+
+`content/mergulhos/` é conteúdo, não código do produto: hoje só serve para validação
+em CI (ver `docs/formato-mergulho.md`) — nada em `site/` carrega esses arquivos ainda.
+Não conectar isso à landing de forma improvisada; a migração de `site/assets/js/mergulho.js`
+(hardcoded) para carregar `content/mergulhos/*.mergulho.json` é trabalho da Fase 1/2
+do ROADMAP, não desta decisão de esquema.
 
 ## O dado central: `data/curriculo.js`
 
