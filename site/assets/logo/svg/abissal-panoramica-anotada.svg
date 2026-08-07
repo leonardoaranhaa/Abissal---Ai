@@ -1,0 +1,10 @@
+<svg viewBox="0 0 640 346" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#57BFB0"/><stop offset="30%" stop-color="#2C6169"/><stop offset="62%" stop-color="#123039"/><stop offset="100%" stop-color="#07131A"/></linearGradient></defs>
+<rect width="640" height="346" fill="#07131A"/>
+<path d="M 0,52 L 90,55 L 180,60 L 250,68 L 300,82 L 335,115 L 355,165 L 368,220 L 376,265 L 382,288 L 387,300 L 392,286 L 400,258 L 412,210 L 428,158 L 450,112 L 480,80 L 540,62 L 640,56 L 640,40 L 0,40 Z" fill="url(#ga)"/>
+<line x1="0" y1="40" x2="640" y2="40" stroke="#5c7078" stroke-width="1.6" stroke-dasharray="2 6" opacity="0.75"/>
+<circle cx="387" cy="300" r="6" fill="#E5A82E"/>
+<line x1="387" y1="309" x2="387" y2="322" stroke="#E5A82E" stroke-width="1.4"/>
+<text x="387" y="338" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="13" letter-spacing="1.5" fill="#E5A82E">-10.935 M</text>
+<text x="387" y="353" text-anchor="middle" font-family="'IBM Plex Mono',monospace" font-size="10" letter-spacing="2" fill="#7E938D">CHALLENGER DEEP · FOSSA DAS MARIANAS</text>
+</svg>

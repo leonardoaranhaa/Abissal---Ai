@@ -42,10 +42,13 @@ abissal/
     assets/js/app.js       → diagnóstico, currículo, formulário, som ambiente
     assets/js/mergulho.js  → o mergulho guiado de 7 fases da landing
     assets/js/curriculo.js → lógica do catálogo
+    assets/logo/svg, /png  → identidade visual (mark, wordmark, panorâmica) — ver docs/marca.md
+    assets/favicon/        → favicon.ico, PNGs por tamanho, apple-touch-icon
     data/curriculo.js      → ÚNICA fonte de verdade do currículo (ver abaixo)
   docs/
     metodo-abissal.md      → manual pedagógico — leia antes de mexer em UX de aula
     curriculo.md           → como o currículo foi desenhado, convenções de conteúdo
+    marca.md                → guia da marca — símbolo, cor, tipografia, o que não fazer
     ROADMAP.md             → fases seguintes e critérios de avanço
   CLAUDE.md                → este arquivo
   README.md                → como rodar, testar e publicar localmente
