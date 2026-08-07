@@ -42,16 +42,27 @@
   </div>
   <header class="hero">
    <div class="eyebrow" style="color:#4a5f66">Escola Avançada de Inteligência Artificial · turma piloto em formação</div>
-   <h1 style="margin-top:22px">Ninguém contrata quem só nadou na <em>superfície</em>.</h1>
-   <p class="lead">Escrever prompt bonito e colar num chat já está saturado — e já está sendo
-   automatizado. O trabalho que vai existir em 2030 está embaixo: quem projeta agentes, desenha a
-   arquitetura de dados, mede o que o sistema erra e responde por ele.</p>
+   <h1 style="margin-top:14px">Ninguém contrata quem só nadou na <em>superfície</em>.</h1>
+   <p class="lead">Não vamos te explicar o método — a bancada abaixo é a mesma da aula, e já está ligada.</p>
 
-   <div class="hcta">
-    <p class="hcta-t">Não vamos te explicar o método. Você vai fazer um.</p>
-    <p class="hcta-d">Um mergulho real da trilha de Engenharia de Prompt, as sete fases inteiras,
-    com as travas funcionando. Cerca de 4 minutos. Sem cadastro, sem e-mail, sem pegadinha.</p>
-    <button class="btn pri grande" id="mgIniciar">Começar o mergulho ↓</button>
+   <!-- COLD OPEN: o laboratório é a primeira coisa, não a explicação dele.
+        Prompt fraco já preenchido de propósito — a primeira ação é um clique
+        e a primeira consequência é uma falha visível (Lei 1). -->
+   <div class="hero-lab">
+    <div class="hl-h">
+     <span class="hl-t">Chegou este pedido. O ERP só aceita JSON.</span>
+     <span class="mono" style="color:var(--sulfur)">EP · E1 · M02 · A03</span>
+    </div>
+    <p class="hl-s">Campo faltando derruba a integração e o pedido some sem avisar ninguém.</p>
+    <div id="heroLab"></div>
+    <p class="hl-honesto">A resposta do modelo aqui é simulada — não há chave de API num site
+    estático.<br><b>A verificação não é:</b> os testes rodam de verdade sobre a saída, com
+    JSON.parse e checagem de tipo.</p>
+   </div>
+
+   <div class="hl-saida">
+    <button class="btn pri grande" id="mgIniciar">Continuar o mergulho ↓</button>
+    <span class="mono" style="color:#5c7078">7 fases · ~4 min · sem cadastro</span>
    </div>
 
    <!-- números calculados de data/curriculo.js em app.js: não editar à mão -->
@@ -73,6 +84,11 @@
   </div>
 
   <div class="mg">
+   <!-- saída permanente: quem se convenceu na fase 3 não precisa terminar as 7 -->
+   <div class="mg-saida" id="mgSaida" hidden>
+    <span><b>Já dá pra decidir?</b> Você não precisa terminar as sete fases para entrar na lista.</span>
+    <a class="btn pri" href="#lista">Entrar na lista →</a>
+   </div>
    <div class="mg-topo">
     <span class="mono" id="mgStat">Fase 0 de 6 · Briefing</span>
     <div class="mg-barra"><i id="mgProg"></i></div>
@@ -138,5 +154,6 @@
 
 <script src="data/curriculo.js"></script>
 <script src="assets/js/app.js"></script>
+<script src="assets/js/bancada.js"></script>
 <script src="assets/js/mergulho.js"></script>
 </body></html>
