@@ -70,6 +70,9 @@ function stats(){
 const TONS=["#16303A","#122932","#0E2129","#0A1A21"];
 function renderCarta(){
   const g=$("#cartaGrid");g.innerHTML="";
+  /* A grade acompanha o número de trilhas — nada de 12 fixo no CSS. */
+  g.style.setProperty("--cols",DADOS.trilhas.length);
+  g.style.setProperty("--minw",(150+DADOS.trilhas.length*72)+"px");
   g.appendChild(el("div","ch",""));
   DADOS.trilhas.forEach((t)=>{
     const c=el("div","ch",`<b>${t.c}</b>${t.area}`);
@@ -79,6 +82,13 @@ function renderCarta(){
     g.appendChild(el("div","rh",`E${es.n} · ${es.nome}<span>${es.d}</span>`));
     DADOS.trilhas.forEach((t,ti)=>{
       const est=t.est[ei];
+      /* Trilha de entrada não desce até o fundo: célula vazia diz isso sem texto. */
+      if(!est){
+        const v=el("div","cell vazia","—");
+        v.title=`${t.n} não vai até o estrato ${es.n}`;
+        v.setAttribute("aria-label",`${t.n} não possui estrato ${es.n}`);
+        g.appendChild(v);return;
+      }
       const h=est.m.reduce((a,m)=>a+m.h,0);
       const b=el("button","cell",String(est.m.length));
       b.style.background=TONS[ei];
@@ -199,11 +209,23 @@ function renderPainel(estAberto){
   p.appendChild(prog);
 
   const car=el("div","block",`<div class="block-t">Para onde esta trilha leva</div>`);
-  const cg=el("div","cargos");
-  t.cargos.forEach(c=>cg.appendChild(el("div","cargo",
-    `<b>${c.t}</b><span class="fx">${c.f} / mês</span><p>${c.d}</p>`)));
-  car.appendChild(cg);
-  car.appendChild(el("p","cargos-nota","Faixas indicativas de mercado brasileiro, formação CLT e PJ misturadas, coletadas de vagas públicas e conversas de recrutamento. Servem para calibrar expectativa, não como promessa — valide sempre com fontes atuais antes de negociar."));
+  if(t.cargos.length){
+    const cg=el("div","cargos");
+    t.cargos.forEach(c=>cg.appendChild(el("div","cargo",
+      `<b>${c.t}</b><span class="fx">${c.f} / mês</span><p>${c.d}</p>`)));
+    car.appendChild(cg);
+    car.appendChild(el("p","cargos-nota","Faixas indicativas de mercado brasileiro, formação CLT e PJ misturadas, coletadas de vagas públicas e conversas de recrutamento. Servem para calibrar expectativa, não como promessa — valide sempre com fontes atuais antes de negociar."));
+  }else if(t.destino){
+    /* Trilha de entrada não promete cargo — promete porta aberta. */
+    car.appendChild(el("p","destino-t",t.destino.texto));
+    const dg=el("div","destinos");
+    t.destino.trilhas.forEach(cod=>{
+      const d=DADOS.trilhas.find(x=>x.c===cod);
+      if(d)dg.appendChild(el("div","destino",`<span class="k">${d.c}</span><b>${d.n}</b><span>${d.area}</span>`));
+    });
+    car.appendChild(dg);
+    car.appendChild(el("p","cargos-nota",t.destino.nota));
+  }
   p.appendChild(car);
 }
 

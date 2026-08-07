@@ -9,6 +9,7 @@ Duas letras, fixas, usadas em toda parte (URL de módulo, título de mergulho, e
 
 | Código | Trilha |
 |---|---|
+| BT | Batismo (entrada) |
 | EP | Engenharia de Prompt |
 | EA | Engenharia de Agentes |
 | RC | RAG e Engenharia de Conhecimento |
@@ -26,11 +27,34 @@ Não reutilizar um código para outra trilha nem renomear um existente sem avali
 todo lugar que referencia o código (percursos de carreira, lógica do diagnóstico
 em `app.js`, links externos já divulgados).
 
-## Estratos (fixos, os mesmos para todas as trilhas)
+## Estratos
 
 E1 Fótico (fundamentos) → E2 Plataforma (aplicação) → E3 Talude (especialização)
-→ E4 Abissal (fronteira). Não criar um 5º estrato ou variar por trilha — a carta de
-profundidade do site depende dessa simetria.
+→ E4 Abissal (fronteira). Nunca criar um 5º estrato nem trocar o significado de um
+existente: a carta de profundidade e o medidor lateral dependem dessa escala.
+
+Uma trilha **pode** parar antes do E4, e o site lida com isso — a carta desenha as
+células que faltam tracejadas, com um traço no lugar do número. Isso existe para o
+Batismo, que tem só E1 e E2 de propósito: ele leva até a borda, não até o fundo, e
+mostrar isso na carta é mais honesto que fingir quatro estratos.
+
+O que não pode: começar em E2, ou pular E2 e ter E1 e E3. Estrato ausente só no fim.
+
+## Trilha de entrada
+
+`BT · Batismo` é a porta para quem não vem da área, e segue três regras próprias:
+
+- **`cargos` vazio.** Ela não leva a um cargo, leva às trilhas que levam. No lugar
+  dos cargos vai o campo `destino` (`{texto, trilhas[], nota}`), que o site renderiza
+  como as portas que ela destrava. Nunca inventar faixa salarial para ela.
+- **Pré-requisitos sem jargão.** "Vontade de construir alguma coisa", não "lógica básica" —
+  quem lê isso está decidindo se pertence ao lugar.
+- **Ordem entender → construir → técnica.** A base técnica vem depois de já existir um
+  motivo para ela. Inverter isso é começar pelo conceito, que a Lei 1 proíbe.
+
+Quem marca "nunca escrevi uma linha" no diagnóstico é roteado para o Batismo antes da
+trilha alvo (ver `EXIGEM_CODIGO` em `app.js`). Ao criar uma trilha nova que precise de
+código, incluir o código dela nessa lista.
 
 ## Ao adicionar ou editar um módulo
 

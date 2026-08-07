@@ -24,7 +24,7 @@ Ver `CLAUDE.md` — é o mapa completo do repositório e das convenções.
 site/index.html              shell HTML
 site/assets/css/style.css    design system (tokens no :root)
 site/assets/js/app.js        toda a lógica (diagnóstico, laboratório, currículo, form)
-site/data/curriculo.js       currículo completo — 12 trilhas, 132 módulos
+site/data/curriculo.js       currículo completo — 13 trilhas, 140 módulos
 ```
 
 ## Captação de lead
@@ -53,7 +53,7 @@ Passo a passo e alternativas (Netlify, Cloudflare) em `docs/publicar-abissal.md`
 ## Onde editar o currículo
 
 `site/data/curriculo.js`. É um objeto JS puro — `estratos` (4, fixos) e `trilhas`
-(hoje 12). Formato de cada campo documentado em `CLAUDE.md`, seção "O dado central".
+(hoje 13). Formato de cada campo documentado em `CLAUDE.md`, seção "O dado central".
 
 Depois de editar, valide a sintaxe antes de commitar:
 
