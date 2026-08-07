@@ -40,6 +40,7 @@ abissal/
     assets/css/style.css   → design system (tokens no :root) + a landing
     assets/css/curriculo.css → só o que é específico do catálogo
     assets/js/app.js       → diagnóstico, currículo, formulário, som ambiente
+    assets/js/bancada.js   → o laboratório: detector de prompt + verificadores reais
     assets/js/mergulho.js  → o mergulho guiado de 7 fases da landing
     assets/js/curriculo.js → lógica do catálogo
     assets/logo/svg, /png  → identidade visual (mark, wordmark, panorâmica) — ver docs/marca.md
@@ -61,6 +62,25 @@ abissal/
 Não existe build step. `site/` é HTML/CSS/JS puro, aberto direto no navegador ou
 servido por qualquer servidor estático. Mantenha assim enquanto estiver em validação —
 introduzir um bundler agora é trabalho que não paga aluguel.
+
+## A bancada — a regra que não pode ser quebrada
+
+`site/assets/js/bancada.js` é o laboratório da landing, usado no cold open do hero e
+nas fases 1, 3 e 4 do mergulho. A pessoa escreve o próprio prompt; a saída é derivada
+do que ela escreveu, não de qual botão clicou. A divisão é o argumento de honestidade
+da escola, e está escrita na própria página:
+
+- **A resposta do modelo é simulada.** Não há chamada de API (não pode haver chave num
+  site estático — e o ROADMAP põe modelo atrás de rota de servidor só na Fase 2). O que
+  existe é `lerPrompt()`, um detector das decisões que a aula ensina.
+- **A verificação NÃO é simulada.** `VERIFS` roda `JSON.parse`, checagem de tipo e
+  comparação de esquema entre execuções, sobre a string produzida. Nunca substituir um
+  verificador por julgamento de modelo — é o que a Lei 4 proíbe, e é o que separa esta
+  demonstração de um quiz com resposta pré-escrita.
+
+Se um dia a Fase 2 trouxer modelo de verdade, só `gerarSaida()` sai; os verificadores
+ficam como estão. Ao mexer no detector, lembre que o modo de falha que importa é o falso
+verde: prompt ruim que passa prova que a escola é fachada. Prefira reprovar e explicar.
 
 `content/mergulhos/` é conteúdo, não código do produto: hoje só serve para validação
 em CI (ver `docs/formato-mergulho.md`) — nada em `site/` carrega esses arquivos ainda.
