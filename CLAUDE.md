@@ -35,9 +35,13 @@ Orçamento desta fase: ~R$ 100/mês. Isso significa hospedagem estática grátis
 ```
 abissal/
   site/                    → a landing de validação (produção hoje)
-    index.html             → shell HTML, sem estilo/lógica inline
-    assets/css/style.css   → todo o design system (tokens no :root)
-    assets/js/app.js       → toda a lógica: diagnóstico, laboratório, currículo, form
+    index.html             → landing: hero → mergulho → diagnóstico → lista
+    curriculo.html         → catálogo completo (carta de profundidade, percursos)
+    assets/css/style.css   → design system (tokens no :root) + a landing
+    assets/css/curriculo.css → só o que é específico do catálogo
+    assets/js/app.js       → diagnóstico, currículo, formulário, som ambiente
+    assets/js/mergulho.js  → o mergulho guiado de 7 fases da landing
+    assets/js/curriculo.js → lógica do catálogo
     data/curriculo.js      → ÚNICA fonte de verdade do currículo (ver abaixo)
   docs/
     metodo-abissal.md      → manual pedagógico — leia antes de mexer em UX de aula
@@ -58,9 +62,18 @@ Define `const DADOS = { estratos: [...], trilhas: [...] }`, carregado antes de `
 **Estratos** (4, fixos, compartilhados por todas as trilhas):
 `{ n, nome, sub, d }` — profundidade nominal, do fótico (fundamentos) ao abissal (fronteira).
 
-**Trilhas** (hoje 12): cada uma com `c` (código de 2 letras, ex. "EP"), `n` (nome), `area`,
-`tese`, `ementa`, `pre[]`, `fer[]`, `cargos[]`, e `est[]` — um array de 4 estratos, cada um
-com `p` (entrega avaliativa) e `m[]` (módulos).
+**Trilhas** (hoje 13, incluindo a de entrada `BT`): cada uma com `c` (código de 2 letras, ex. "EP"), `n` (nome), `area`,
+`tese`, `ementa`, `pre[]`, `fer[]`, `cargos[]`, e `est[]` — um array de até 4 estratos, cada
+um com `p` (entrega avaliativa) e `m[]` (módulos).
+
+Uma trilha pode parar antes do E4: o `BT · Batismo` tem só E1 e E2 porque leva até a borda,
+não até o fundo, e a carta de profundidade desenha as células que faltam tracejadas. Trilha
+de entrada também tem `cargos` vazio e um campo `destino` no lugar — ela não promete cargo,
+promete porta aberta. Regras completas em `docs/curriculo.md`.
+
+Os números do currículo (trilhas, módulos, aulas, horas) são **calculados** de `DADOS` em
+`app.js` e injetados no hero. Nunca escreva esses números à mão no HTML — eles desatualizam
+na primeira trilha nova.
 
 **Módulo**: `{ t (título), o (objetivo), h (horas), a[] (aulas, só título por enquanto) }`.
 

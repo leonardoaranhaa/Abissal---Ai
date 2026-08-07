@@ -114,7 +114,15 @@ addEventListener("scroll",gauge,{passive:true});addEventListener("resize",gauge)
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}}),{threshold:.08});
 document.querySelectorAll(".rv").forEach(e=>io.observe(e));
 
-/* ---------- contadores ---------- */
+/* ---------- contadores ----------
+   Os números do hero saem de DADOS, nunca do HTML: currículo é fonte única
+   de verdade, e número escrito à mão desatualiza na primeira trilha nova. */
+(function(){
+ const n={trilhas:TRILHAS.length,modulos:0,aulas:0,horas:0};
+ TRILHAS.forEach(t=>t.est.forEach(e=>e.m.forEach(m=>{
+  n.modulos++;n.aulas+=m.a.length;n.horas+=m.h;})));
+ document.querySelectorAll("#hnums b[data-k]").forEach(b=>{b.dataset.n=n[b.dataset.k];});
+})();
 const io2=new IntersectionObserver(es=>es.forEach(e=>{
  if(!e.isIntersecting)return;io2.unobserve(e.target);
  const n=+e.target.dataset.n;if(RM){e.target.textContent=n.toLocaleString("pt-BR");return;}
@@ -214,19 +222,27 @@ addEventListener("keydown",e=>{
   resp[q.id]=q.o[n-1][0];passo++;ping(500+passo*40);renderDiag();manterVista();}
 });
 
+/* Trilhas que pedem código de verdade: quem nunca programou entra pelo Batismo. */
+const EXIGEM_CODIGO=["EA","RC","AD","OI","CI","AV","SR","AU","MM"];
 function calcula(){
  const r=REGRAS.find(x=>x.se(resp));
  const t=T(r.tri),a=T(r.apo);
- const ponte=(resp.code==="0"&&["EA","CI","AD","OI","MM","SR"].includes(r.tri));
+ const ponte=(resp.code==="0"&&EXIGEM_CODIGO.includes(r.tri));
+ const bt=ponte?T("BT"):null;
  const horas=t.est.reduce((s,e)=>s+e.m.reduce((x,m)=>x+m.h,0),0);
+ const hbt=bt?bt.est.reduce((s,e)=>s+e.m.reduce((x,m)=>x+m.h,0),0):0;
  const sem=parseInt(resp.tempo,10);
- return {t,a,ponte,horas,sem,meses:Math.max(3,Math.round(horas/sem/4.3)),
-  primeiros:t.est[0].m.concat(t.est[1].m).slice(0,4)};
+ /* Quando existe ponte, o percurso é Batismo + trilha — e o prazo diz isso. */
+ const inicio=bt||t;
+ return {t,a,ponte,bt,horas,hbt,sem,
+  meses:Math.max(3,Math.round((horas+hbt)/sem/4.3)),
+  mesesBt:bt?Math.max(1,Math.round(hbt/sem/4.3)):0,
+  primeiros:inicio.est[0].m.concat(inicio.est[1].m).slice(0,4)};
 }
 function sondar(s){
  const c=calcula();
  const linhas=[
-  "cruzando 132 módulos do currículo…",
+  `cruzando ${TRILHAS.reduce((s,t)=>s+t.est.reduce((x,e)=>x+e.m.length,0),0)} módulos do currículo…`,
   `ponto de entrada identificado: <b>estrato 1 · fótico</b>`,
   `trilha compatível: <b>${c.t.n}</b>`,
   `ritmo de ${c.sem} h/semana → <b>~${c.meses} meses</b> até o estrato 4`,
@@ -251,19 +267,24 @@ function mostrar(s,c){
  b.appendChild(stg(el("div","res-h",`<div class="k">Percurso montado · ${c.t.c}</div>
   <h3>${c.t.n}</h3><p>${c.t.tese}</p>`)));
  b.appendChild(stg(el("dl","grid2",`
-  <div><dt>Trilha principal</dt><dd>${c.t.n}<small>${c.t.est.reduce((s,e)=>s+e.m.length,0)} módulos · ${c.horas} horas</small></dd></div>
+  ${c.ponte?`<div><dt>Você começa por</dt><dd>${c.bt.n}<small>${c.bt.est.reduce((s,e)=>s+e.m.length,0)} módulos · ${c.hbt} horas · ~${c.mesesBt} ${c.mesesBt===1?"mês":"meses"}</small></dd></div>`:""}
+  <div><dt>${c.ponte?"Depois, a trilha":"Trilha principal"}</dt><dd>${c.t.n}<small>${c.t.est.reduce((s,e)=>s+e.m.length,0)} módulos · ${c.horas} horas</small></dd></div>
   <div><dt>Trilha de apoio</dt><dd>${c.a.n}<small>atravessa a principal em pontos-chave</small></dd></div>
-  <div><dt>Ritmo estimado</dt><dd>~${c.meses} meses<small>a ${c.sem} h/semana, do E1 ao E4</small></dd></div>
+  <div><dt>Ritmo estimado</dt><dd>~${c.meses} meses<small>a ${c.sem} h/semana, ${c.ponte?"do Batismo ao E4":"do E1 ao E4"}</small></dd></div>
   <div><dt>Primeiro artefato</dt><dd>1ª semana<small>algo que roda, não um certificado</small></dd></div>`)));
- if(c.ponte)b.appendChild(stg(el("div","nota aviso",
-  `<b>Uma ressalva honesta</b>Você marcou que não programa, e ${c.t.n} exige código desde o estrato 2.
-   Não vamos fingir que dá para pular. Seu percurso começa por <b>Engenharia de Prompt (E1)</b> e
-   <b>Automação (E1)</b> como ponte — cerca de 8 semanas — e só então entra em ${c.t.c}.
-   É mais longo, e é o que funciona.`)));
+ if(c.ponte)b.appendChild(stg(el("div","nota",
+  `<b>Você não vai começar pelo fundo — e isso não é consolo</b>
+   Você marcou que nunca escreveu código, e ${c.t.n} exige isso desde o estrato 2. Não vamos fingir
+   que dá para pular: seu percurso começa pelo <b>Batismo</b>, a trilha de entrada, que leva cerca de
+   ${c.mesesBt} ${c.mesesBt===1?"mês":"meses"} no seu ritmo. Ela termina com você construindo um
+   sistema que lê um dado seu, decide algo e devolve resultado — e é isso que destrava
+   ${c.t.n}. Mergulhador nenhum desce sem batismo.`)));
  b.appendChild(stg(el("div","nota",`<b>Seu Projeto Farol</b>"${esc((resp.farol||"").slice(0,320))}"<br><br>
   A partir do primeiro dia, toda aula termina com uma pergunta ligando o conteúdo a isso. Ao fim do
   primeiro estrato, você tem cerca de 30 anotações que, juntas, são a especificação do seu projeto.`)));
- b.appendChild(stg(el("div","eyebrow","Seus quatro primeiros mergulhos")));
+ b.appendChild(stg(el("div","eyebrow",c.ponte
+  ?"Seus quatro primeiros mergulhos — no Batismo"
+  :"Seus quatro primeiros mergulhos")));
  const ml=el("div","mlist");ml.style.marginTop="16px";
  c.primeiros.forEach((m,i)=>ml.appendChild(el("div","mrow",
   `<span class="n">M${String(i+1).padStart(2,"0")}</span>
